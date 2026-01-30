@@ -38,6 +38,7 @@ TOTAL: $1.99
         XCTAssertEqual(expectedReceipt, receipt.output())
     }
     
+    // modified due to the pricing discount applied
     func test2for1() {
         register.scan(Item(name: "Beans (8oz Can)", priceEach: 199))
         register.scan(Item(name: "Beans (8oz Can)", priceEach: 199))
