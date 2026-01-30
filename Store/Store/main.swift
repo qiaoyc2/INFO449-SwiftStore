@@ -82,8 +82,13 @@ class Receipt {
     }
 }
 
+protocol PricingScheme {
+    func discount(of item: Item) -> Int
+}
+
 class Register {
     var receipt: Receipt
+    var pricingScheme: PricingScheme?
     
     init(){
         self.receipt = Receipt([])
@@ -95,10 +100,20 @@ class Register {
     
     func subtotal() -> Int{
         var sum: Int = 0
+        var discounted: [Item] = []
+        var discount: Int = 0
         for item in self.receipt.items(){
             sum += item.price()
+            var count = self.receipt.items().filter { $0.name == item.name }.count
+            if count % 3 == 0 && !discounted.contains(where: { $0.name == item.name }) {
+                    discounted.append(item)
+            }
         }
-        return sum
+        for item in discounted{
+            var count = self.receipt.items().filter { $0.name == item.name }.count
+            discount += item.price() * (count / 3)
+        }
+        return sum - discount
     }
     
     func total() -> Receipt {

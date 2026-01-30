@@ -38,11 +38,11 @@ TOTAL: $1.99
         XCTAssertEqual(expectedReceipt, receipt.output())
     }
     
-    func testThreeSameItems() {
+    func test2for1() {
         register.scan(Item(name: "Beans (8oz Can)", priceEach: 199))
         register.scan(Item(name: "Beans (8oz Can)", priceEach: 199))
         register.scan(Item(name: "Beans (8oz Can)", priceEach: 199))
-        XCTAssertEqual(199 * 3, register.subtotal())
+        XCTAssertEqual(199 * 2, register.subtotal())
     }
     
     func testThreeDifferentItems() {
@@ -73,4 +73,12 @@ TOTAL: $7.97
         XCTAssertEqual(199, register.subtotal())
         
     }
+    
+    func testDiscount_notAppliedBeforeThree() {
+        register.scan(Item(name: "Beans (8oz Can)", priceEach: 199))
+        register.scan(Item(name: "Beans (8oz Can)", priceEach: 199))
+
+        XCTAssertEqual(398, register.subtotal())
+    }
+
 }
