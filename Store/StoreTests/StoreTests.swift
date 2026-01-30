@@ -66,4 +66,11 @@ TOTAL: $7.97
 """
         XCTAssertEqual(expectedReceipt, receipt.output())
     }
+    // added tests
+    func testAddItem() {
+        let item = Item(name: "Beans (8oz Can)", priceEach: 199)
+        register.scan(item)
+        XCTAssertEqual(199, register.subtotal())
+        
+    }
 }
